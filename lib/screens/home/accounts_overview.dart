@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Overview extends StatefulWidget {
-  const Overview({super.key});
+class AccountsOverview extends StatefulWidget {
+  const AccountsOverview({super.key});
 
   @override
-  State<Overview> createState() => _OverviewState();
+  State<AccountsOverview> createState() => _AccountsOverviewState();
 }
 
-class _OverviewState extends State<Overview> {
+class _AccountsOverviewState extends State<AccountsOverview> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

@@ -1,4 +1,6 @@
+import 'package:finance_app/screens/home/accounts_overview.dart';
 import 'package:finance_app/screens/home/dashboard.dart';
+import 'package:finance_app/screens/home/trades_overview.dart';
 import 'package:finance_app/utils/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +17,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         drawer: const CustomDrawer(),
         appBar: AppBar(
-          title: const Icon(Icons.currency_bitcoin_sharp),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.logout,
+                ))
+          ],
         ),
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              // OverviewScreen(),
               Dashboard(),
+              TradesOverview(),
+              // AccountsOverview(),
             ],
           ),
         ));

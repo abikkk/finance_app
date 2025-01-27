@@ -14,24 +14,23 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Card(
+            Card(
+              color: Colors.grey.shade200,
               elevation: 5,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
-                child: Row(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                height: 65,
+                child: const Row(
                   children: [
-                    Icon(Icons.currency_bitcoin_sharp),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text('Contact: 01-2345678'),
-                          Text('Email: test@gmail.com')
-                        ],
+                      child: Text(
+                        'test@gmail.com',
+                        textAlign: TextAlign.center,
                       ),
                     )
                   ],
@@ -41,94 +40,129 @@ class _DashboardState extends State<Dashboard> {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            const Wrap(
+              spacing: 5,
+              runSpacing: 5,
               children: [
-                Container(
-                  height: 45,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.blue,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Receivable',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+                DashboardStatCards(
+                  title: 'Total Sales',
+                  data: 'Rs 123123.45',
                 ),
-                const SizedBox(
-                  width: 10,
+                DashboardStatCards(
+                  title: 'Total Purchases',
+                  data: 'Rs 123123.45',
+                  trendingUp: false,
                 ),
-                Container(
-                  height: 45,
-                  width: 120,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.blue)),
-                  child: const Center(
-                      child: Text(
-                    'Payable',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  )),
-                )
+                DashboardStatCards(
+                  title: 'Closing Amount',
+                  data: 'Rs 123123.45',
+                  trendingUp: false,
+                ),
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
-            Container(
-              height: 45,
-              decoration: BoxDecoration(border: Border.all()),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Center(
-                    child: Text(
-                      'Total\nNRs. 999',
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.black54,
-                  ),
-                  Center(
-                      child: Text(
-                    '< 90 Days\nNRs. 999',
-                  )),
-                  VerticalDivider(
-                    color: Colors.black54,
-                  ),
-                  Center(
-                      child: Text(
-                    '> 90 Days\nNRs. 999',
-                  ))
-                ],
-              ),
+            const Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: [
+                DashboardStatCards(
+                  title: 'Total Payables',
+                  data: 'Rs 123123.45',
+                  trendingUp: false,
+                ),
+                DashboardStatCards(
+                  title: 'Total Receivables',
+                  data: 'Rs 123123.45',
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: [
+                DashboardStatCards(
+                  title: 'Banks',
+                  data: 'Rs 123123.45',
+                  trendingUp: false,
+                ),
+                DashboardStatCards(
+                  title: 'Current Total',
+                  data: 'Rs 123123.45',
+                ),
+                DashboardStatCards(
+                  title: 'Overdrafts Total',
+                  data: 'Rs 123123.45',
+                  trendingUp: false,
+                ),
+              ],
             ),
             const SizedBox(
               height: 20,
             ),
-            const Row(
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DashboardStatCards extends StatefulWidget {
+  const DashboardStatCards(
+      {super.key,
+      required this.title,
+      required this.data,
+      this.trendingUp = true});
+
+  final String title, data;
+  final bool trendingUp;
+
+  @override
+  State<DashboardStatCards> createState() => _DashboardStatCardsState();
+}
+
+class _DashboardStatCardsState extends State<DashboardStatCards> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.grey.shade200,
+      elevation: 5,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        height: 65,
+        width: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Sales and Purchase graph',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                  widget.title,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                    fontSize: 10,
                   ),
                 ),
+                Icon(
+                  widget.trendingUp ? Icons.trending_up : Icons.trending_down,
+                  color: widget.trendingUp ? Colors.green : Colors.red,
+                  size: 15,
+                )
               ],
             ),
-            const SizedBox(
-              height: 10,
+            Text(
+              widget.data,
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
-            const SizedBox(
-              height: 200,
-              child: Placeholder(),
-            )
           ],
         ),
       ),

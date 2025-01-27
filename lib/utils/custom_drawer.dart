@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../screens/banking_screen.dart';
 import '../screens/documents_screen.dart';
-import '../screens/home/overview.dart';
+import '../screens/home/trades_overview.dart';
 import '../screens/inventories_screen.dart';
 import '../screens/accounts_screen.dart';
 import '../screens/report_screen.dart';
@@ -22,14 +22,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: ListView(
         padding: const EdgeInsets.only(top: 40),
         children: [
-          ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text('Dashboard'),
-            onTap: () {
-              Get.to(() => const Overview());
-              // Navigator.pop(context);
-            },
-          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.0),
             child: Text('Stock'),
