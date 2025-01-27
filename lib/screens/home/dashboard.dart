@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({
+class Dashboard extends StatefulWidget {
+  const Dashboard({
     super.key,
   });
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

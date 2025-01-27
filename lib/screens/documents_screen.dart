@@ -11,7 +11,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Documents'),),
+        appBar: AppBar(title: const Text('Documents'),),
         body: const Placeholder());
   }
 }

@@ -13,6 +13,10 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   get:
+  dio: ^5.7.0
+  flutter_secure_storage: ^9.2.4
+  flutter_expandable_table: ^2.1.0
+  adaptive_theme: ^3.7.0
 
 dev_dependencies:
   flutter_test:
