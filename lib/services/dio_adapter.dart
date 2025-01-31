@@ -1,75 +1,92 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:finance_app/services/token_helper.dart';
+import 'package:finance_app/utils/api_endpoints.dart';
 
-class ApiBaseHelper {
-  static const String baseUrl = 'YOUR_BASE_URL_HERE';
-  static final BaseOptions options = BaseOptions(
-    baseUrl: baseUrl,
-    responseType: ResponseType.json,
-    connectTimeout: const Duration(seconds: 20),
-    receiveTimeout: const Duration(seconds: 20),
-  );
+class DioService {
+  TokenHelper tokenHelper = TokenHelper();
+  static final baseUrl = ApiEndpoints.baseURL;
 
-  static final Dio _dio = Dio(options);
+  static final DioService _instance = DioService._internal();
 
-  static void addInterceptors() {
-    _dio.interceptors.add(CustomInterceptor());
+  factory DioService() => _instance;
+
+  final Dio _dio;
+
+  DioService._internal()
+      : _dio = Dio(BaseOptions(
+          baseUrl: baseUrl,
+          connectTimeout: const Duration(seconds: 20),
+          receiveTimeout: const Duration(seconds: 20),
+        )) {
+    _setupInterceptors();
   }
 
-  Future<Response> getHTTP(String url) async {
-    try {
-      return await _dio.get(url);
-    } on DioError catch (e) {
-      rethrow; // or return a custom response
-    }
+  _setupInterceptors() async {
+    String token = '';
+    await tokenHelper.getToken().then((_) => token = _);
+
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        if (token.trim().isNotEmpty) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        options.headers['Content-Type'] = 'application/json';
+        return handler.next(options);
+      },
+      onResponse: (response, handler) {
+        return handler.next(response);
+      },
+      onError: (DioException e, handler) {
+        return handler.next(e);
+      },
+    ));
   }
 
-  Future<Response> postHTTP(String url, dynamic data) async {
-    try {
-      return await _dio.post(url, data: data);
-    } on DioError catch (e) {
-      rethrow;
-    }
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
+    return await _dio.get(path, queryParameters: queryParameters);
   }
 
-  Future<Response> putHTTP(String url, dynamic data) async {
+  Future<Response> post(String path, {dynamic data}) async {
+    return await _dio.post(path, data: data);
+  }
+
+  Future<Response> put(String url, {dynamic data}) async {
     try {
       return await _dio.put(url, data: data);
-    } on DioError catch (e) {
+    } on DioException {
       rethrow;
     }
   }
 
-  Future<Response> deleteHTTP(String url) async {
+  Future<Response> delete(String url) async {
     try {
       return await _dio.delete(url);
-    } on DioError catch (e) {
+    } on DioException {
       rethrow;
     }
   }
 }
 
-class CustomInterceptor extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint('## REQUEST[${options.method}] => PATH: ${options.path}');
-    return handler
-        .next(options);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    debugPrint(
-        '## RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-    return handler.next(
-        response);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    debugPrint(
-        '## ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
-    return handler
-        .next(err);
-  }
-}
+// class CustomInterceptor extends Interceptor {
+//   @override
+//   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+//     debugPrint('## REQUEST[${options.method}] => PATH: ${options.path}');
+//     return handler.next(options);
+//   }
+//
+//   @override
+//   Future<void> onResponse(
+//       Response response, ResponseInterceptorHandler handler) async {
+//     debugPrint(
+//         '## RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+//     return handler.next(response);
+//   }
+//
+//   @override
+//   void onError(DioException err, ErrorInterceptorHandler handler) {
+//     debugPrint(
+//         '## ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+//     return handler.next(err);
+//   }
+// }

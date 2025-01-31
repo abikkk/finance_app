@@ -1,4 +1,7 @@
+import 'package:finance_app/utils/custom_app_theme.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/stat_cards.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({
@@ -19,18 +22,18 @@ class _DashboardState extends State<Dashboard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Card(
-              color: Colors.grey.shade200,
               elevation: 5,
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: 65,
-                child: const Row(
+                child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         'test@gmail.com',
                         textAlign: TextAlign.center,
+                        style: darkTheme.textTheme.titleMedium,
                       ),
                     )
                   ],
@@ -44,16 +47,16 @@ class _DashboardState extends State<Dashboard> {
               spacing: 5,
               runSpacing: 5,
               children: [
-                DashboardStatCards(
+                StatCards(
                   title: 'Total Sales',
                   data: 'Rs 123123.45',
                 ),
-                DashboardStatCards(
+                StatCards(
                   title: 'Total Purchases',
                   data: 'Rs 123123.45',
                   trendingUp: false,
                 ),
-                DashboardStatCards(
+                StatCards(
                   title: 'Closing Amount',
                   data: 'Rs 123123.45',
                   trendingUp: false,
@@ -67,12 +70,12 @@ class _DashboardState extends State<Dashboard> {
               spacing: 5,
               runSpacing: 5,
               children: [
-                DashboardStatCards(
+                StatCards(
                   title: 'Total Payables',
                   data: 'Rs 123123.45',
                   trendingUp: false,
                 ),
-                DashboardStatCards(
+                StatCards(
                   title: 'Total Receivables',
                   data: 'Rs 123123.45',
                 ),
@@ -85,16 +88,16 @@ class _DashboardState extends State<Dashboard> {
               spacing: 5,
               runSpacing: 5,
               children: [
-                DashboardStatCards(
+                StatCards(
                   title: 'Banks',
                   data: 'Rs 123123.45',
                   trendingUp: false,
                 ),
-                DashboardStatCards(
+                StatCards(
                   title: 'Current Total',
                   data: 'Rs 123123.45',
                 ),
-                DashboardStatCards(
+                StatCards(
                   title: 'Overdrafts Total',
                   data: 'Rs 123123.45',
                   trendingUp: false,
@@ -103,65 +106,6 @@ class _DashboardState extends State<Dashboard> {
             ),
             const SizedBox(
               height: 20,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DashboardStatCards extends StatefulWidget {
-  const DashboardStatCards(
-      {super.key,
-      required this.title,
-      required this.data,
-      this.trendingUp = true});
-
-  final String title, data;
-  final bool trendingUp;
-
-  @override
-  State<DashboardStatCards> createState() => _DashboardStatCardsState();
-}
-
-class _DashboardStatCardsState extends State<DashboardStatCards> {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.grey.shade200,
-      elevation: 5,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        height: 65,
-        width: 150,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.title,
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Icon(
-                  widget.trendingUp ? Icons.trending_up : Icons.trending_down,
-                  color: widget.trendingUp ? Colors.green : Colors.red,
-                  size: 15,
-                )
-              ],
-            ),
-            Text(
-              widget.data,
-              textAlign: TextAlign.start,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
             ),
           ],
         ),

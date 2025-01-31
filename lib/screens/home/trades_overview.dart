@@ -1,3 +1,4 @@
+import 'package:finance_app/utils/custom_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:material_table_view/material_table_view.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -12,95 +13,139 @@ class TradesOverview extends StatefulWidget {
 class _TradesOverviewState extends State<TradesOverview> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
         child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          Row(
-            children: [
-              Text(
-                'Purchase graph',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+          Card(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Purchase graph',
+                        style: darkTheme.textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 200,
+                    child: BarGraph(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 200,
-            child: BarGraph(),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(
-                'Sales graph',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 200,
-            child: BarGraph(
-              isSales: true,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Text(
-                'Latest Purchase',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+          Card(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Sales graph',
+                        style: darkTheme.textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 200,
+                    child: BarGraph(
+                      isSales: true,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 200,
-            child: TablesUI(),
-          ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Text(
-                'Latest Sale',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+          Card(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Latest Purchase',
+                        style: darkTheme.textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 300,
+                    child: TablesUI(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 10,
+          const SizedBox(
+            height: 20,
           ),
-          SizedBox(
-            height: 200,
-            child: TablesUI(),
+          Card(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Latest Sale',
+                        style: darkTheme.textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 300,
+                    child: TablesUI(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
         ],
@@ -124,10 +169,10 @@ class _TablesUIState extends State<TablesUI> {
     return TableView.builder(
       columns: [
         const TableColumn(
-          width: 56.0,
+          width: 55.0,
           freezePriority: 100,
         ),
-        for (var i = 1; i < 100; i++) const TableColumn(width: 64),
+        for (var i = 1; i < 100; i++) const TableColumn(width: 50),
       ],
       rowCount: 1048576,
       rowHeight: 56.0,
@@ -175,8 +220,6 @@ class _BarGraphState extends State<BarGraph> {
   @override
   Widget build(BuildContext context) {
     return SfSparkLineChart.custom(
-      // trackball: const SparkChartTrackball(
-      //     activationMode: SparkChartActivationMode.tap),
       marker:
           const SparkChartMarker(displayMode: SparkChartMarkerDisplayMode.all),
       labelDisplayMode: SparkChartLabelDisplayMode.all,
